@@ -10,8 +10,10 @@ module.exports.signup_post = async (req, res) => {
         password
     } = req.body;
 
-    userService.createUser(username, password).then((user) => {
-            res.status(203).json(user);
+    userService.createUser(username, password).then(({user, token, maxAge}) => {
+            res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge})
+        
+            res.status(203).json({user: user._id});
 
         })
         .catch(err => {

@@ -9,11 +9,11 @@ const authRoutes = require('./routes/authroutes');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-const mongoConfig = require('./mongo-config');
+const { dbURI } = require('./secretconfig');
 
 
 //db
-const dbURI = mongoConfig.dbURI;
+//const dbURI = mongoConfig.dbURI;
 
 mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
 .then((res) => console.log('connected to db.'))
@@ -39,37 +39,5 @@ app.use(express.json());
 app.use(authRoutes);
 
 app.get('/', (req, res) => {
-    res.render('test')
+    res.render('front')
 })
-
-
-
-// app.get('/add-blog', (req, res) => {
-//     // const img = fs.readFile('./img.txt');
-
-//     const newPost = new Post({
-//         poster: 'anon',
-//         subject: 'thread subject',
-//         content: 'lorem',
-//         OP: true
-
-//     })
-
-//     newPost.save()
-//     .then((result) => {
-//         res.send(result);
-//     }).catch(e => {
-//         console.log(e);
-//     });
-
-//     // res.render('test', { data });
-// })
-
-
-
-
-// app.get('/', (req, res) => {
-//     const data = { name: 'june', title: 'somebody please' }
-
-//     res.render('test', { data });
-// })
