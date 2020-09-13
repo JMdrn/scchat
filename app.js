@@ -41,3 +41,7 @@ app.use(authRoutes);
 app.get('/', (req, res) => {
     res.render('front')
 })
+
+app.get('/login', (req, res) => {
+    res.render('login')
+})

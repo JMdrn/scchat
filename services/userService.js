@@ -10,7 +10,7 @@ module.exports.createUser = async (username, password) => {
         })
         const [token, maxAge] = createToken(user._id);
 
-        //return the jwt too.
+        //return maxAge for if they want to send the cookie. return the jwt too.
         return { user, token, maxAge };
     }
 

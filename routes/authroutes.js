@@ -12,3 +12,4 @@ router.get('/vip', authController.vippage_get);
 
 module.exports = router;
 
+ 

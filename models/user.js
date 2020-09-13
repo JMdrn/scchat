@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 // const { isEmail } = require('validator');
 const bcrypt = require('bcrypt');
+const winston = require('winston');
 
 const Schema = mongoose.Schema;
 
@@ -41,6 +42,25 @@ userSchema.pre('save', async function(next) {
     next();
 })
 
+userSchema.statics.login = async function (username, password) {
+    const user = await this.findOne({username: username})
+winston.info('hit here');
+    if (user) {
+      const auth = await bcrypt.compare( password, user.password );
+
+      if(auth){
+        return user;
+      } else {
+        console.log('incorrect password');
+        throw Error('incorrect password');
+        
+      }
+
+    }
+    console.log('incorrect email')
+    throw Error('incorrect email')
+    
+}
 
 
 const User = mongoose.model('User', userSchema);
