@@ -35,19 +35,28 @@ module.exports.signup_post = async (req, res) => {
 
 
 module.exports.login_post = async (req, res) => {
-
     const { username, password } = req.body;
 
     try {
-        const user = await User.login(username, password);
+
+        const {user, token} = await User.login(username, password);
+
+        res.cookie('jwt', token); //token is undefined here - fix?
+        
 
         res.status(200).json({user: user._id})
     }
     catch(err) {
-        res.status(400).json({});
-    }
 
-   
+    
+        const errors = handleError(err);
+
+        // console.log('2nd err = ' +  Object.values(errors))
+
+        res.status(400).json({
+            errors
+        });
+    }
 }
 
 
@@ -57,7 +66,7 @@ module.exports.vippage_get = (req, res) => {
     console.log(req.body);
 
 
-    res.send('VIP hit');
+    res.send('VIP hit !!');
 }
 
 
@@ -68,3 +77,6 @@ module.exports.vippage_get = (req, res) => {
 // 
 // craete services folder
 //send upload details to that.
+
+
+

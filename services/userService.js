@@ -8,6 +8,9 @@ module.exports.createUser = async (username, password) => {
             password,
             'role': 'basic'
         })
+
+        console.log(' we in userServuce.kjs Test here _____>', user, user._id);
+
         const [token, maxAge] = createToken(user._id);
 
         //return maxAge for if they want to send the cookie. return the jwt too.

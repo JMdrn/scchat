@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 // const { isEmail } = require('validator');
 const bcrypt = require('bcrypt');
+const { createToken } = require('../helper/jwtfunc.js');
 const winston = require('winston');
 
 const Schema = mongoose.Schema;
@@ -43,23 +44,23 @@ userSchema.pre('save', async function(next) {
 })
 
 userSchema.statics.login = async function (username, password) {
-    const user = await this.findOne({username: username})
-winston.info('hit here');
+    const user = await this.findOne({username: username}) //can be shorted to {username}
+    // winston.info('hit here');
     if (user) {
       const auth = await bcrypt.compare( password, user.password );
 
       if(auth){
-        return user;
-      } else {
-        console.log('incorrect password');
-        throw Error('incorrect password');
-        
-      }
 
+        console.log('is this better in a service file? idk where to put this function but heres user --->', user) 
+        const [token] = createToken(user._id);
+
+
+        return {user , token};
+      } else {
+        throw Error('incorrect password');
+      }
     }
-    console.log('incorrect email')
-    throw Error('incorrect email')
-    
+    throw Error('incorrect username');
 }
 
 

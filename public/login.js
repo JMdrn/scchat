@@ -2,6 +2,8 @@ const form = document.querySelector('#login');
 const usernameErr = document.querySelector('#login .username-err');
 const passwordErr = document.querySelector('#login .password-err'); 
 
+console.log('her ');
+
  //all of this validation needs refactored with reuseable functions...
 form.addEventListener('submit', async (e) => { 
      e.preventDefault();
@@ -28,13 +30,15 @@ form.addEventListener('submit', async (e) => {
          const data = await res.json();
 
          if(data.errors) {
+             console.log('her e');
              usernameErr.textContent = data.errors.username;
              passwordErr.textContent = data.errors.password;
          }
              
          else if (data.user){
-               console.log({user: data.user})
-            //  location.assign('/');
+            //    console.log({user: data.user})
+             location.assign('/');
+             console.log({user: data.user})
          }
      }
      catch(err) {
