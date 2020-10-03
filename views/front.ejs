@@ -8,15 +8,25 @@
 </head>
 <body> 
 
-<!-- 
-   <form id="login"><h2>login</h2>
+   
+
+   <% if (locals.msg) { %>
+      <span><%= locals.msg %></span>
+    <% } %>
+
+    <% if (locals.user) { %>
+      <span>hey - you're logged in as <%= locals.user.username %></span>
+    <% } %>
+   
+
+   <!-- <form id="login"><h2>login</h2>
         <span class="username-err"></span>
         <input type="text" name="username" placeholder="username"></input>
         <span class="password-err"></span>
         <input type="password" name="password" placeholder="password"></input>
         <input type="submit" name="submit" value="login" placeholder="submit"></input>  
    </form> -->
-<a href="/login">go login</a>
+  <a href="/login">go login</a>
 
    <form id="register"><h2>register</h2>   
         <span class="username-err"></span>

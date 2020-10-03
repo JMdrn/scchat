@@ -41,7 +41,7 @@ module.exports.login_post = async (req, res) => {
 
         const {user, token} = await User.login(username, password);
 
-        res.cookie('jwt', token); //token is undefined here - fix?
+        res.cookie('jwt', token, {maxAge: 28800000}) ; //token is undefined here - fix?
         
 
         res.status(200).json({user: user._id})
@@ -63,10 +63,10 @@ module.exports.login_post = async (req, res) => {
 
 module.exports.vippage_get = (req, res) => {
 
-    console.log(req.body);
+    //if you can get here you are past the auth :)
 
-
-    res.send('VIP hit !!');
+    res.render('vippage');
+    // res.send('VIP hit !!');
 }
 
 

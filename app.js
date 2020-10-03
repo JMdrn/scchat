@@ -5,6 +5,7 @@ const Post = require('./models/post');
 const User = require('./models/user');
 const fs = require('fs');
 const authRoutes = require('./routes/authroutes');
+const { checkUser } = require('./middleware/authMiddleware');
 
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -35,8 +36,8 @@ app.use(express.json());
 
 
 // const txt = fs.readFileSync('img.txt');
+app.get('*', checkUser);
 
-app.use(authRoutes);
 
 app.get('/', (req, res) => {
     res.render('front')
@@ -45,3 +46,10 @@ app.get('/', (req, res) => {
 app.get('/login', (req, res) => {
     res.render('login')
 })
+
+app.get('/logout', (req, res) => {
+    res.clearCookie('jwt');
+    res.render('front', {msg: 'Successfully logged out'});
+})
+
+app.use(authRoutes);
