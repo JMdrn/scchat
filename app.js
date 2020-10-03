@@ -13,9 +13,6 @@ const bodyParser = require('body-parser');
 const { dbURI } = require('./secretconfig');
 
 
-//db
-//const dbURI = mongoConfig.dbURI;
-
 mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
 .then((res) => console.log('connected to db.'))
 .then (() =>  app.listen(3000, () => console.log('listening on 3k')))
@@ -34,8 +31,6 @@ app.use(cookieParser());
 app.use(express.json());
 
 
-
-// const txt = fs.readFileSync('img.txt');
 app.get('*', checkUser);
 
 
