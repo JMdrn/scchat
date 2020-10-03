@@ -49,6 +49,7 @@ app.get('/login', (req, res) => {
 
 app.get('/logout', (req, res) => {
     res.clearCookie('jwt');
+    res.locals.user = null;
     res.render('front', {msg: 'Successfully logged out'});
 })
 

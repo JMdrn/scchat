@@ -16,6 +16,8 @@
 
     <% if (locals.user) { %>
       <span>hey - you're logged in as <%= locals.user.username %></span>
+
+      <%- include('part/logout.ejs');  %>
     <% } %>
    
 
