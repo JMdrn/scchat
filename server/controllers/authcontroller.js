@@ -1,7 +1,7 @@
 const userService = require('../services/userService');
 const { handleError } = require('../helper/authHandleError');
 const User = require('../models/user');
-
+const winston = require('winston');
 
 
 module.exports.signup_post = async (req, res) => {
@@ -41,7 +41,7 @@ module.exports.login_post = async (req, res) => {
 
         const {user, token} = await User.login(username, password);
 
-        res.cookie('jwt', token, {maxAge: 28800000}) ; //token is undefined here - fix?
+        res.cookie('jwt', token, {maxAge: 28800000}) ; 
         
 
         res.status(200).json({user: user._id})
@@ -62,10 +62,12 @@ module.exports.login_post = async (req, res) => {
 
 
 module.exports.vippage_get = (req, res) => {
+    console.log('res . locals', res.locals.user);
 
     //if you can get here you are past the auth :)
+    
 
-    res.render('vippage');
+    res.json(res.locals.user).status(200);
     // res.send('VIP hit !!');
 }
 

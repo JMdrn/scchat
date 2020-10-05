@@ -6,6 +6,7 @@ const User = require('./models/user');
 const fs = require('fs');
 const authRoutes = require('./routes/authroutes');
 const { checkUser } = require('./middleware/authMiddleware');
+const cors = require('cors');
 
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -29,10 +30,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.json());
-
-
-app.get('*', checkUser);
-
+app.use(cors());
 
 app.get('/', (req, res) => {
     res.render('front')
@@ -42,10 +40,16 @@ app.get('/login', (req, res) => {
     res.render('login')
 })
 
+app.get('*', checkUser);
+
+
+
 app.get('/logout', (req, res) => {
     res.clearCookie('jwt');
     res.locals.user = null;
     res.render('front', {msg: 'Successfully logged out'});
 })
+
+
 
 app.use(authRoutes);
